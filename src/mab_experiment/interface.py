@@ -13,8 +13,8 @@ def run_experiment(eid: int, n_steps: int, agents: List[Agent], variable_mab: Va
     return experiment
 
 
-def get_agents(n_agents: int, agent_type: AgentType) -> List[Agent]:
+def get_agents(n_agents: int, agent_type: AgentType, **kwargs) -> List[Agent]:
     if agent_type == AgentType.VOTER_MODEL:
-        return [VoterModelAgent(aid=aid) for aid in range(n_agents)]
+        return [VoterModelAgent(aid=aid, **kwargs) for aid in range(n_agents)]
     else:
         raise NotImplementedError(f'Agent type {agent_type} not implemented.')
