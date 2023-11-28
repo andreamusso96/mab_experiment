@@ -19,7 +19,7 @@ def get_variable_multi_armed_bandit(mab_start_rounds: List[int]) -> exp.Variable
 
 
 def get_agents(n_agents: int) -> List[exp.Agent]:
-    return exp.get_agents(n_agents=n_agents, agent_type=exp.AgentType.VOTER_MODEL, softmax_prob=0.1)
+    return exp.get_agents(n_agents=n_agents, agent_type=exp.AgentType.VOTER_MODEL, softmax_prob=0.1, memory_window=10)
 
 
 def get_network(n_nodes: int, avg_degree: int, rewiring_prob: float):
