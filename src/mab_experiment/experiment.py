@@ -38,12 +38,12 @@ class Experiment:
 
     def _get_action_history(self) -> pd.DataFrame:
         action_histories = pd.DataFrame([agent.action_history for agent in self.agents.values()], index=list(self.agents.keys()), columns=list(range(self.step_num))).T
-        action_histories.index.name = 'round_num'
+        action_histories.index.name = 'step_num'
         return action_histories
 
     def _get_payoff_history(self) -> pd.DataFrame:
         payoff_histories = pd.DataFrame([agent.payoff_history for agent in self.agents.values()], index=list(self.agents.keys()), columns=list(range(self.step_num))).T
-        payoff_histories.index.name = 'round_num'
+        payoff_histories.index.name = 'step_num'
         return payoff_histories
 
     def _get_agent_metadata(self) -> pd.DataFrame:

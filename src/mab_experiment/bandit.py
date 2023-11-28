@@ -47,23 +47,23 @@ class MultiArmedBandit:
 
 
 class VariableMultiArmedBandit:
-    def __init__(self, multi_armed_bandits: List[MultiArmedBandit], mab_start_rounds: List[int]):
+    def __init__(self, multi_armed_bandits: List[MultiArmedBandit], mab_start_steps: List[int]):
         self.multi_armed_bandits = multi_armed_bandits
-        self.mab_start_rounds = mab_start_rounds
+        self.mab_start_steps = mab_start_steps
 
     def pull(self, arm: int, step_num: int) -> float:
-        mab_id = np.searchsorted(self.mab_start_rounds, step_num, side='right') - 1
+        mab_id = np.searchsorted(self.mab_start_steps, step_num, side='right') - 1
         return self.multi_armed_bandits[mab_id].pull(arm=arm)
 
     def n_bandits(self, step_num: int) -> int:
-        mab_id = np.searchsorted(self.mab_start_rounds, step_num, side='right') - 1
+        mab_id = np.searchsorted(self.mab_start_steps, step_num, side='right') - 1
         return self.multi_armed_bandits[mab_id].n_bandits()
 
     def to_pandas(self) -> pd.DataFrame:
         data = []
         for i, multi_armed_bandit in enumerate(self.multi_armed_bandits):
             mab_df = multi_armed_bandit.to_pandas()
-            mab_df['mab_start_round'] = self.mab_start_rounds[i]
+            mab_df['mab_start_step'] = self.mab_start_steps[i]
             data.append(mab_df)
         return pd.concat(data)
 
