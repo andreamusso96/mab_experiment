@@ -46,7 +46,7 @@ class MultiArmedBandit:
         return self.__str__()
 
 
-class VariableMultiArmedBandit:
+class NonStationaryMultiArmedBandit:
     def __init__(self, multi_armed_bandits: List[MultiArmedBandit], mab_start_steps: List[int]):
         self.multi_armed_bandits = multi_armed_bandits
         self.mab_start_steps = mab_start_steps

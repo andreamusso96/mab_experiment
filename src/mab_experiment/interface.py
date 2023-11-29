@@ -3,12 +3,12 @@ from typing import List
 import networkx as nx
 
 from .agent import AgentType, Agent, VoterModelAgent
-from .bandit import VariableMultiArmedBandit
+from .bandit import NonStationaryMultiArmedBandit
 from .experiment import Experiment
 
 
-def run_experiment(eid: int, n_steps: int, agents: List[Agent], variable_mab: VariableMultiArmedBandit, network: nx.Graph) -> Experiment:
-    experiment = Experiment(eid=eid, agents=agents, variable_multi_armed_bandit=variable_mab, network=network)
+def run_experiment(eid: int, n_steps: int, agents: List[Agent], non_stationary_multi_armed_bandit: NonStationaryMultiArmedBandit, network: nx.Graph) -> Experiment:
+    experiment = Experiment(eid=eid, agents=agents, non_stationary_multi_armed_bandit=non_stationary_multi_armed_bandit, network=network)
     experiment.run_experiment(n_steps=n_steps)
     return experiment
 

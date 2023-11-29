@@ -4,14 +4,14 @@ import networkx as nx
 import pandas as pd
 
 from .agent import Agent
-from .bandit import VariableMultiArmedBandit
+from .bandit import NonStationaryMultiArmedBandit
 
 
 class Experiment:
-    def __init__(self, eid: int, agents: List[Agent], variable_multi_armed_bandit: VariableMultiArmedBandit, network: nx.Graph):
+    def __init__(self, eid: int, agents: List[Agent], non_stationary_multi_armed_bandit: NonStationaryMultiArmedBandit, network: nx.Graph):
         self.eid = eid
         self.agents = {agent.aid: agent for agent in agents}
-        self.variable_multi_armed_bandit = variable_multi_armed_bandit
+        self.non_stationary_multi_armed_bandit = non_stationary_multi_armed_bandit
         self.network = network
         self.step_num = 0
 
@@ -22,17 +22,17 @@ class Experiment:
     def step(self) -> None:
         for agent_id, agent in self.agents.items():
             nbrs = [self.agents[nbr] for nbr in self.network.neighbors(agent_id)]
-            agent.prepare_step(step_num=self.step_num, nbrs=nbrs, variable_mab=self.variable_multi_armed_bandit)
+            agent.prepare_step(step_num=self.step_num, nbrs=nbrs, variable_mab=self.non_stationary_multi_armed_bandit)
 
         for agent_id, agent in self.agents.items():
-            agent.step(step_num=self.step_num, variable_mab=self.variable_multi_armed_bandit)
+            agent.step(step_num=self.step_num, variable_mab=self.non_stationary_multi_armed_bandit)
 
         self.step_num += 1
 
     def save(self, folder_path: str) -> None:
         self._get_action_history().to_csv(f'{folder_path}/experiment_{self.eid}_action_history.csv')
         self._get_payoff_history().to_csv(f'{folder_path}/experiment_{self.eid}_payoff_history.csv')
-        self.variable_multi_armed_bandit.to_pandas().to_csv(f'{folder_path}/experiment_{self.eid}_variable_multi_armed_bandit.csv')
+        self.non_stationary_multi_armed_bandit.to_pandas().to_csv(f'{folder_path}/experiment_{self.eid}_non_stationary_multi_armed_bandit.csv')
         nx.to_pandas_adjacency(self.network).to_csv(f'{folder_path}/experiment_{self.eid}_network_adj.csv')
         self._get_agent_metadata().to_csv(f'{folder_path}/experiment_{self.eid}_agent_metadata.csv')
 
